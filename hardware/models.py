@@ -44,6 +44,9 @@ class Device(models.Model):
     image_object.admin_order_field = 'image'
     scheme_image_object.admin_order_field = 'scheme_image'
 
+    def __str__(self):
+        return self.name
+
 
 class DeviceAdmin(admin.ModelAdmin):
     list_display = ('name', 'image_object', 'scheme_image_object')
@@ -51,18 +54,21 @@ class DeviceAdmin(admin.ModelAdmin):
 
 class Relay(models.Model):
     NUMBER_CHOICES = (
-        ('1', 'First'),
-        ('2', 'Second'),
-        ('3', 'Third'),
-        ('4', 'Forth'),
-        ('5', 'Fifth'),
-        ('6', 'Sixth'),
-        ('7', 'Seventh'),
-        ('8', 'Eughth'),
+        (1, 'First'),
+        (2, 'Second'),
+        (3, 'Third'),
+        (4, 'Forth'),
+        (5, 'Fifth'),
+        (6, 'Sixth'),
+        (7, 'Seventh'),
+        (8, 'Eighth'),
     )
     number = models.IntegerField(choices=NUMBER_CHOICES)
     pin = models.ForeignKey(Pin)
     device = models.ForeignKey(Device)
+
+    def __str__(self):
+        return 'Relay ' + self.number
 
 
 class Sensor(models.Model):

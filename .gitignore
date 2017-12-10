@@ -25,6 +25,13 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+**/*.pyc
 
 # PyInstaller
 #  Usually these files are written by a python script from a template

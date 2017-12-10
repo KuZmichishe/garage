@@ -1,0 +1,37 @@
+{% extends 'hardware/base.html' %}
+{% block hardware_active %}active{% endblock %}
+{% block title %}Devices list{% endblock %}
+{% block body %}
+<div class="fims-container container-fluid">
+
+    <!-- Albums -->
+    <div class="row">
+        <div class="col-sm-12">
+            <h3>Hardware</h3>
+        </div>
+        {% if devices %}
+            {% for device in devices %}
+                <div class="col-sm-4 col-lg-2">
+                    <div class="thumbnail">
+                        {% if device.image %}
+                            <img src="{{ device.image.url }}" class="img-responsive">
+                        {% endif %}
+                        <div class="caption">
+                            <h3>{{ device.name }}</h3>
+
+                            <!-- Turn on -->
+                            <a href="{% url 'hardware:device_on' device.id %}" class="btn btn-primary btn-sm ajax-link" role="button">Turn On</a>
+                        </div>
+                    </div>
+                </div>
+                {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
+            {% endfor %}
+        {% else %}
+            <div class="col-sm-12">
+                <br>
+            </div>
+        {% endif %}
+    </div>
+
+</div>
+{% endblock %}
