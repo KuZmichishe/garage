@@ -76,6 +76,7 @@ class Sensor(models.Model):
     pin = models.ForeignKey(Pin)
     image = models.FileField(default='')
     scheme_image = models.FileField(default='')
+    code = models.CharField(null=False, max_length=100, default='')
 
     def __str__(self):
         return self.name
