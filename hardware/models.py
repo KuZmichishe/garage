@@ -3,16 +3,14 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.contrib import admin
-from django.conf import settings
 from django.utils.html import format_html
-from django.conf.urls.static import static
+from image_cropping import ImageRatioField, ImageCroppingMixin
 
 
 class Pin(models.Model):
     number = models.IntegerField(null=False)
     name = models.CharField(null=False, max_length=100)
     is_in = models.BooleanField(default=True)
-    is_active = models.BooleanField(default=False)
     position = models.IntegerField(null=False)
 
     def __str__(self):
@@ -20,13 +18,33 @@ class Pin(models.Model):
 
 
 class PinAdmin(admin.ModelAdmin):
-    list_display = ('name', 'is_in', 'is_active', 'position')
+    list_display = ('name', 'is_in', 'position')
+
+
+class Relay(models.Model):
+    NUMBER_CHOICES = (
+        (1, 'First'),
+        (2, 'Second'),
+        (3, 'Third'),
+        (4, 'Forth'),
+        (5, 'Fifth'),
+        (6, 'Sixth'),
+        (7, 'Seventh'),
+        (8, 'Eighth'),
+    )
+    number = models.IntegerField(choices=NUMBER_CHOICES)
+    pin = models.ForeignKey(Pin)
+
+    def __str__(self):
+        return 'Relay ' + str(self.number)
 
 
 class Device(models.Model):
     name = models.CharField(null=False, max_length=100)
-    pin = models.ManyToManyField(Pin, through='Relay')
-    image = models.FileField(default='')
+    relay = models.ForeignKey(Relay)
+    is_active = models.BooleanField(default=False)
+    image = models.ImageField(blank=True, upload_to='uploaded_images')
+    cropped_image = ImageRatioField('image', '422x422')
     scheme_image = models.FileField(default='')
 
     def image_object(self):
@@ -48,27 +66,8 @@ class Device(models.Model):
         return self.name
 
 
-class DeviceAdmin(admin.ModelAdmin):
+class DeviceAdmin(ImageCroppingMixin, admin.ModelAdmin):
     list_display = ('name', 'image_object', 'scheme_image_object')
-
-
-class Relay(models.Model):
-    NUMBER_CHOICES = (
-        (1, 'First'),
-        (2, 'Second'),
-        (3, 'Third'),
-        (4, 'Forth'),
-        (5, 'Fifth'),
-        (6, 'Sixth'),
-        (7, 'Seventh'),
-        (8, 'Eighth'),
-    )
-    number = models.IntegerField(choices=NUMBER_CHOICES)
-    pin = models.ForeignKey(Pin)
-    device = models.ForeignKey(Device)
-
-    def __str__(self):
-        return 'Relay ' + self.number
 
 
 class Sensor(models.Model):

@@ -20,7 +20,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^hardware/', include('hardware.urls')),
+    url(r'^', include('hardware.urls')),
 ]
 
 if settings.DEBUG:

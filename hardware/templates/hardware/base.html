@@ -6,12 +6,13 @@
     {% load staticfiles %}
     <link rel="shortcut icon" type="image/png" href="{%  static 'favicon.ico' %}"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Satisfy" />
-    <link rel="stylesheet" type="text/css" href="{% static 'hardware/style.css' %}"/>
+    <link href="https://fonts.googleapis.com/css?family=Special+Elite" rel="stylesheet">
+    <!--<link href="https://fonts.googleapis.com/css?family=Luckiest+Guy" rel="stylesheet">-->
+    <link rel="stylesheet" type="text/css" href="{% static 'hardware/style.css' %}?e=2"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
-    <script src="{% static 'hardware/js/main.js' %}"></script>
+    <script src="{% static 'hardware/js/main.js' %}?h=7"></script>
 </head>
 <body>
 <nav class="navbar navbar-inverse">
@@ -24,13 +25,14 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{% url 'hardware:index' %}">Media</a>
+            <a class="navbar-brand" href="{% url 'hardware:index' %}">Garage</a>
         </div>
 
         <!-- Items -->
         <div class="collapse navbar-collapse" id="topNavBar">
             <ul class="nav navbar-nav">
-                <li class="{% block devices_active %}{% endblock %}"><a href="{% url 'hardware:index' %}"><span class="glyphicon glyphicon-cd" aria-hidden="true"></span>&nbsp; Devices</a></li>
+                <li class="{% block devices_active %}{% endblock %}"><a href="{% url 'hardware:index' %}"><span class="glyphicon glyphicon-lamp" aria-hidden="true"></span>&nbsp; Devices</a></li>
+                <li class="{% block sensors_active %}{% endblock %}"><a href="{% url 'hardware:index' %}"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span>&nbsp; Sensors</a></li>
             </ul>
             <form class="navbar-form navbar-left" role="search" method="get" action="{% url 'hardware:index' %}">
                 <div class="form-group">

@@ -1,3 +1,31 @@
+var AjaxLinks = {
+    init: function() {
+        this.$container = $('.ajax-link');
+        this.render();
+        this.bindEvents();
+    },
+
+    render: function() {
+
+    },
+
+    bindEvents: function() {
+        this.$container.on('click', function(e) {
+            e.preventDefault();
+
+            var self = $(this);
+            var url = $(this).attr('href');
+            $.getJSON(url, function(result) {
+                if (result.success) {
+                    self.html(result.message);
+                    self.toggleClass('active');
+                }
+            });
+            return false;
+        });
+    }
+}
+
 
 var AlbumsListPage = {
     init: function() {
@@ -56,6 +84,7 @@ var SongsListPage = {
 };
 
 $(document).ready(function() {
-    AlbumsListPage.init();
-    SongsListPage.init();
+    //AlbumsListPage.init();
+    //SongsListPage.init();
+    AjaxLinks.init();
 });

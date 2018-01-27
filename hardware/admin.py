@@ -9,3 +9,4 @@ admin.site.register(Pin, PinAdmin)
 admin.site.register(Relay)
 admin.site.register(Device, DeviceAdmin)
 admin.site.register(Sensor)
+
