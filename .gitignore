@@ -6,7 +6,6 @@
 ehthumbs.db
 Thumbs.db
 **/*.pyc
-manage.py
 ._*
 .idea/
 .env
