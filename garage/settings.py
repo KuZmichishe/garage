@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'hardware.apps.HardwareConfig',
     'easy_thumbnails',
     'image_cropping',
+    'constance',
+    'constance.backends.database'
 ]
 
 MIDDLEWARE = [
@@ -140,3 +142,12 @@ IMAGE_CROPPING_THUMB_SIZE = (300, 300)
 THUMBNAIL_PROCESSORS = (
     'image_cropping.thumbnail_processors.crop_corners',
 ) + thumbnail_settings.THUMBNAIL_PROCESSORS
+
+CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
+
+CONSTANCE_CONFIG = {
+    'THE_ANSWER': (42, 'Answer to the Ultimate Question of Life, '
+                       'The Universe, and Everything'),
+    'Test': ('tupple', 'some title', str),
+    'Test bool': (True, 'this is test of boolean', bool),
+}

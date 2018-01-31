@@ -73,9 +73,20 @@ class DeviceAdmin(ImageCroppingMixin, admin.ModelAdmin):
 class Sensor(models.Model):
     name = models.CharField(null=False, max_length=100)
     pin = models.ForeignKey(Pin)
+    devices = models.ManyToManyField(Device)
     image = models.FileField(default='')
     scheme_image = models.FileField(default='')
     code = models.CharField(null=False, max_length=100, default='')
 
     def __str__(self):
         return self.name
+
+    def image_object(self):
+        return format_html(
+            '<img width=30 height=30 src="{}" />',
+            self.image.url,
+        )
+
+
+class SensorAdmin(admin.ModelAdmin):
+    list_display = ('name', 'image_object', 'pin')
