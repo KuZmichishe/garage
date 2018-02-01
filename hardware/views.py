@@ -2,13 +2,13 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import render, get_object_or_404
-from .models import Device, Pin, Relay, Sensor
 from django.http import JsonResponse
 from django.core.serializers import serialize
+from services import get_all_devices, turn_device
 
 
 def index(request):
-    devices = Device.objects.all()
+    devices = get_all_devices()
     return render(
         request,
         'hardware/index.html', {
@@ -18,18 +18,9 @@ def index(request):
 
 
 def device_on(request, device_id):
-    device = Device.objects.get(pk=device_id)
-    pin = device.relay.pin_id
-
-    if(device.is_active == True):
-        word = 'Turn on'
-    else:
-        word = 'Turn off'
-
-    device.is_active = not(device.is_active)
-    device.save()
+    word, status = turn_device(device_id)
     return JsonResponse({
-        'success': True,
+        'success': status,
         'message': word
     })
 

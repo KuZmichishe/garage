@@ -77,6 +77,8 @@ class Sensor(models.Model):
     image = models.FileField(default='')
     scheme_image = models.FileField(default='')
     code = models.CharField(null=False, max_length=100, default='')
+    last_request_time = models.DateTimeField(auto_now=False, auto_now_add=False)
+    result = models.CharField(null=True, max_length=200)
 
     def __str__(self):
         return self.name
