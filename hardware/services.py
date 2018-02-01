@@ -11,7 +11,7 @@ def get_all_devices(limit=None):
 def turn_device(device_id):
     device = Device.objects.get(pk=device_id)
     pin = device.relay.pin_id
-
+    GPIO.setmode(GPIO.BOARD)
     if (device.is_active == True):
         word = 'Turn on'
         GPIO.output(2, GPIO.HIGH)
