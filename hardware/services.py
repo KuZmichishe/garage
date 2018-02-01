@@ -12,13 +12,12 @@ def turn_device(device_id):
     device = Device.objects.get(pk=device_id)
     pin = device.relay.pin.number
 
-    if (device.is_active == True):
+    if device.is_active:
         word = 'Turn on'
         turn_pin_on_off(pin, GPIO.LOW)
     else:
         word = 'Turn off'
-        turn_pin_on_off(pin)
-
+        turn_pin_on_off(pin, GPIO.HIGH, GPIO.OUT, GPIO.BCM)
 
     device.is_active = not device.is_active
     device.save()
