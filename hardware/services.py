@@ -1,5 +1,5 @@
 from .models import Device, Pin, Relay, Sensor
-import RPI.GPIO as GPIO
+import RPi.GPIO as GPIO
 
 
 def get_all_devices(limit=None):
