@@ -14,10 +14,10 @@ def turn_device(device_id):
 
     if device.is_active:
         word = 'Turn on'
-        turn_pin_on_off(int(pin), GPIO.LOW)
+        turn_pin_on_off(int(pin))
     else:
         word = 'Turn off'
-        turn_pin_on_off(int(pin))
+        turn_pin_on_off(int(pin), GPIO.LOW)
 
     device.is_active = not device.is_active
     device.save()
