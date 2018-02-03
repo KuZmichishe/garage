@@ -1,6 +1,6 @@
 from .models import Device, Pin, Relay, Sensor
-#import RPi.GPIO as GPIO
-#import Adafruit_DHT
+import RPi.GPIO as GPIO
+import Adafruit_DHT
 
 
 def get_all_devices(limit=None):
