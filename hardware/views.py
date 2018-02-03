@@ -10,7 +10,8 @@ def index(request):
     devices = get_all_devices()
     temperature = get_all_sensors()
     a = temperature[0]
-    a.result = "Temp={0:0.1f}*C  Humidity={1:0.1f}%".format(get_temp_hum(a.pin.number))
+    t, h = get_temp_hum(a.pin.number)
+    a.result = "Temp={0:0.1f}*C  Humidity={1:0.1f}%".format(t, h)
 
     return render(
         request,
