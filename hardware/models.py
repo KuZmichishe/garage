@@ -73,12 +73,12 @@ class DeviceAdmin(ImageCroppingMixin, admin.ModelAdmin):
 class Sensor(models.Model):
     name = models.CharField(null=False, max_length=100)
     pin = models.ForeignKey(Pin)
-    devices = models.ManyToManyField(Device)
+    devices = models.ManyToManyField(Device, blank=True)
     image = models.FileField(default='')
     scheme_image = models.FileField(default='')
     code = models.CharField(null=False, max_length=100, default='')
-    last_request_time = models.DateTimeField(auto_now=False, auto_now_add=False)
-    result = models.CharField(null=True, max_length=200)
+    last_request_time = models.DateTimeField(blank=True, auto_now=True)
+    result = models.CharField(blank=True, max_length=200)
 
     def __str__(self):
         return self.name

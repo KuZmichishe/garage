@@ -1,18 +1,22 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from django.http import JsonResponse
-from django.core.serializers import serialize
-from services import get_all_devices, turn_device
+from services import get_all_devices, turn_device, get_all_sensors, get_temp_hum
 
 
 def index(request):
     devices = get_all_devices()
+    temperature = get_all_sensors()
+    a = temperature[0]
+    a.result = "Temp={0:0.1f}*C  Humidity={1:0.1f}%".format(get_temp_hum(a.pin.number))
+
     return render(
         request,
         'hardware/index.html', {
             'devices': devices,
+            'temperature': a,
         }
     )
 
