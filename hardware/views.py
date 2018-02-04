@@ -1,34 +1,41 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import services
 from django.shortcuts import render
 from django.http import JsonResponse
-from services import get_all_devices, turn_device, get_all_sensors, get_temp_hum
 
 
 def index(request):
-    devices = get_all_devices()
-    temperature = get_all_sensors()
-    a = temperature[0]
-    t, h = get_temp_hum(a.pin.number)
-    a.result = "Temp={0:0.1f}*C  Humidity={1:0.1f}%".format(t, h)
+    devices = services.get_devices()
+    temperature = services.get_sensors(2)
 
     return render(
         request,
         'hardware/index.html', {
             'devices': devices,
-            'temperature': a,
+            'temperature': temperature,
         }
     )
 
 
 def device_on(request, device_id):
-    word, status = turn_device(device_id)
+    word, status = services.turn_device(device_id)
     return JsonResponse({
         'success': status,
         'message': word
     })
 
+
+def update_temperature(request):
+    temperature = services.get_sensors(2)
+    for t in temperature:
+        temp, hum = services.get_temp_hum(t.pin_id)
+        t.result = 'Temp = {0:0.1f} °C,  Humidity = {1:0.1f} %'.format(temp, hum)
+        t.save()
+    return JsonResponse({
+        'success': True,
+    })
 
 '''
 def hcsr501(request):

@@ -12,3 +12,5 @@ Thumbs.db
 local_settings.py
 media/
 media/uploaded_images
+hardware/Adafruit_DHT.py
+hardware/RPi

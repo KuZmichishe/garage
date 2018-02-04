@@ -3,16 +3,16 @@ import RPi.GPIO as GPIO
 import Adafruit_DHT
 
 
-def get_all_devices(limit=None):
+def get_devices(limit=None):
     if limit:
         return Device.objects.all()[:limit]
     return Device.objects.all()
 
 
-def get_all_sensors(limit=None):
+def get_sensors(type=1, limit=None):
     if limit:
-        return Sensor.objects.all()[:limit]
-    return Sensor.objects.all()
+        return Sensor.objects.filter(type=type)[:limit]
+    return Sensor.objects.filter(type=type)
 
 
 def turn_device(device_id):
@@ -44,3 +44,4 @@ def get_temp_hum(pin):
         return temperature, humidity
     else:
         return
+

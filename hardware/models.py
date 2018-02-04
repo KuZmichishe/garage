@@ -5,6 +5,7 @@ from django.db import models
 from django.contrib import admin
 from django.utils.html import format_html
 from image_cropping import ImageRatioField, ImageCroppingMixin
+from django.conf import settings
 
 
 class Pin(models.Model):
@@ -74,11 +75,16 @@ class Sensor(models.Model):
     name = models.CharField(null=False, max_length=100)
     pin = models.ForeignKey(Pin)
     devices = models.ManyToManyField(Device, blank=True)
+    type = models.IntegerField(choices=settings.SENSOR_TYPE, default=3)
     image = models.FileField(default='')
     scheme_image = models.FileField(default='')
     code = models.CharField(null=False, max_length=100, default='')
     last_request_time = models.DateTimeField(blank=True, auto_now=True)
     result = models.CharField(blank=True, max_length=200)
+
+    @property
+    def history_items(self):
+        return TemperatureHistory.objects.filter(sensor__exact=self.id)
 
     def __str__(self):
         return self.name
@@ -92,3 +98,10 @@ class Sensor(models.Model):
 
 class SensorAdmin(admin.ModelAdmin):
     list_display = ('name', 'image_object', 'pin')
+
+
+class TemperatureHistory(models.Model):
+    requested_date = models.DateTimeField()
+    sensor = models.ForeignKey(Sensor, null=True)
+    temperature = models.IntegerField(null=True)
+    humidity = models.IntegerField(null=True)

@@ -151,3 +151,9 @@ CONSTANCE_CONFIG = {
     'Test': ('tupple', 'some title', str),
     'Test bool': (True, 'this is test of boolean', bool),
 }
+
+SENSOR_TYPE = (
+    (1, 'Other'),
+    (2, 'Temperature'),
+    (3, 'Movement')
+)

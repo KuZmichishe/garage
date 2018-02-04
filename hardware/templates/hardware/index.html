@@ -3,7 +3,17 @@
 {% block title %}Devices list{% endblock %}
 {% block body %}
 <div class="films-container container-fluid">
-
+    <div class="row">
+        {% if temperature %}
+            {% for t in temperature %}
+                <div class="col-sm-4"><h4>{{ t.name }}</h4>{{ t.result }}</div>
+            {% endfor %}
+        {% else %}
+            <div class="col-sm-12">
+                <br>
+            </div>
+        {% endif %}
+    </div>
     <div class="row">
         <div class="col-sm-12">
             <h3>Devices</h3>
