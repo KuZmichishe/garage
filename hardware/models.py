@@ -103,5 +103,5 @@ class SensorAdmin(admin.ModelAdmin):
 class TemperatureHistory(models.Model):
     requested_date = models.DateTimeField()
     sensor = models.ForeignKey(Sensor, null=True)
-    temperature = models.IntegerField(null=True)
-    humidity = models.IntegerField(null=True)
+    temperature = models.DecimalField(null=True, max_digits=3, decimal_places=1)
+    humidity = models.DecimalField(null=True, max_digits=3, decimal_places=1)
