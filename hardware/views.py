@@ -33,6 +33,7 @@ def update_temperature(request):
         temp, hum = services.get_temp_hum(t.pin.number)
         t.result = 'Temp = {0:0.1f} °C,  Humidity = {1:0.1f} %'.format(temp, hum)
         t.save()
+        services.save_temperature(temp, hum, t)
     return JsonResponse({
         'success': True,
     })

@@ -1,6 +1,7 @@
-from .models import Device, Pin, Relay, Sensor
+from .models import Device, Pin, Relay, Sensor, TemperatureHistory
 import RPi.GPIO as GPIO
 import Adafruit_DHT
+from datetime import datetime
 
 
 def get_devices(limit=None):
@@ -45,3 +46,13 @@ def get_temp_hum(pin):
     else:
         return
 
+
+def save_temperature(temp, hum, sensor_id):
+    history = TemperatureHistory(
+        requested_date=datetime.now(),
+        sensor=sensor_id,
+        temperature=temp,
+        humidity=hum
+    )
+    history.save()
+    return 
