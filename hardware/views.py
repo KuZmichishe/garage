@@ -30,7 +30,7 @@ def device_on(request, device_id):
 def update_temperature(request):
     temperature = services.get_sensors(2)
     for t in temperature:
-        temp, hum = services.get_temp_hum(t.pin_id)
+        hum, temp = services.get_temp_hum(t.pin.number)
         t.result = 'Temp = {0:0.1f} °C,  Humidity = {1:0.1f} %'.format(temp, hum)
         t.save()
     return JsonResponse({
