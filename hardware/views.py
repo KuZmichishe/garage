@@ -43,7 +43,7 @@ def check_motion(request):
     motions = list(services.get_sensors(3))
     f = False
     for m in motions:
-        if services.detect_movement(m.pin.number):
+        if services.detect_movement(int(m.pin.number)):
             devices = m.devices.all()
             for d in devices:
                 if not d.is_active:
