@@ -38,6 +38,22 @@ def update_temperature(request):
         'success': True,
     })
 
+
+def check_motion(request):
+    motions = list(services.get_sensors(3))
+    f = False
+    for m in motions:
+        if services.detect_movement(m.pin.number):
+            devices = m.devices.all()
+            for d in devices:
+                if not d.is_active:
+                    f = True
+                    services.turn_device(d.id)
+    return JsonResponse({'Status': True, 'F': f})
+
+
+
+
 '''
 def hcsr501(request):
     import RPi.GPIO as GPIO

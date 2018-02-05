@@ -2,6 +2,7 @@ from .models import Device, Pin, Relay, Sensor, TemperatureHistory
 import RPi.GPIO as GPIO
 import Adafruit_DHT
 from datetime import datetime
+import time
 
 
 def get_devices(limit=None):
@@ -55,4 +56,14 @@ def save_temperature(temp, hum, sensor_id):
         humidity=hum
     )
     history.save()
-    return 
+    return
+
+
+def detect_movement(pin, pin_mode=GPIO.IN, mode=GPIO.BCM):
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setmode(mode)
+    GPIO.setup(pin, pin_mode)
+
+    if GPIO.input(pin):
+        return True
+    return False
