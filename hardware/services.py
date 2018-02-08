@@ -22,7 +22,7 @@ def switch_device(device_id, state=None):
     pin = device.relay.pin.number
     if state is None:
         state = not device.is_active
-    switch_pin(int(pin), state)
+    switch_pin(int(pin), not state)
     device.is_active = state
     device.save()
     return state
