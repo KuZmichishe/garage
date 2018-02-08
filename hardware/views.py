@@ -57,5 +57,7 @@ def check_motion(request):
                     services.switch_device(int(device.id), True)
         else:
             if timezone.now() - hcsr501_sensor.last_request_time > duration:
-                services.switch_device(int(device.id), False)
+                for device in devices:
+                    if device.is_active:
+                        services.switch_device(int(device.id), False)
     return JsonResponse({'Status': True})
