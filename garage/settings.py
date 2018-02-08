@@ -147,10 +147,12 @@ THUMBNAIL_PROCESSORS = (
 CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
 
 CONSTANCE_CONFIG = {
+    'MOVEMENT_SENSOR_DELAY': (5, 'Time in mins which device will be turned on until switchd off'),
     'THE_ANSWER': (42, 'Answer to the Ultimate Question of Life, '
                        'The Universe, and Everything'),
     'Test': ('tupple', 'some title', str),
     'Test bool': (True, 'this is test of boolean', bool),
+
 }
 
 SENSOR_TYPE = (

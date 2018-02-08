@@ -4,81 +4,58 @@ from __future__ import unicode_literals
 import services
 from django.shortcuts import render
 from django.http import JsonResponse
+from constance import config
+import datetime
+from django.utils import timezone, dateparse
 
 
 def index(request):
     devices = services.get_devices()
-    temperature = services.get_sensors(2)
+    dht22_sensors = services.get_sensors(2)
 
     return render(
         request,
         'hardware/index.html', {
             'devices': devices,
-            'temperature': temperature,
+            'temperature': dht22_sensors,
         }
     )
 
 
 def device_on(request, device_id):
-    word, status = services.turn_device(device_id)
+    status = services.switch_device(int(device_id))
+    if status:
+        message = 'Turn off'
+    else:
+        message = 'Turn on'
     return JsonResponse({
         'success': status,
-        'message': word
+        'message': message
     })
 
 
 def update_temperature(request):
-    temperature = services.get_sensors(2)
-    for t in temperature:
-        temp, hum = services.get_temp_hum(t.pin.number)
-        t.result = 'Temp = {0:0.1f} °C,  Humidity = {1:0.1f} %'.format(temp, hum)
-        t.save()
-        services.save_temperature(temp, hum, t)
+    dht22_sensors = services.get_sensors(2)
+    for dht22_sensor in dht22_sensors:
+        temp, hum = services.get_dht22_data(int(dht22_sensor.pin.number))
+        dht22_sensor.result = 'Temp = {0:0.1f} °C,  Humidity = {1:0.1f} %'.format(temp, hum)
+        dht22_sensor.save()
+        services.register_temperature(temp, hum, dht22_sensor)
     return JsonResponse({
         'success': True,
     })
 
 
 def check_motion(request):
-    motions = list(services.get_sensors(3))
-    f = False
-    for m in motions:
-        if services.detect_movement(int(m.pin.number)):
-            devices = m.devices.all()
-            for d in devices:
-                if not d.is_active:
-                    f = True
-                    services.turn_device(d.id)
-    return JsonResponse({'Status': True, 'F': f})
-
-
-
-
-'''
-def hcsr501(request):
-    import RPi.GPIO as GPIO
-    import time
-    GPIO.setmode(GPIO.BCM)
-    pir = 5
-    GPIO.setup(pir, GPIO.IN)
-
-    print ("Waiting for sensor to settle")
-    time.sleep(2)
-    print ("Detecting motion")
-    while True:
-        if GPIO.input(pir):
-            print ("Motion Detected!")
-            time.sleep(2)
-        time.sleep(0.1)
-
-
-def dht22(request):
-    import Adafruit_DHT
-    sensor = Adafruit_DHT.DHT22
-    humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
-    if humidity is not None and temperature is not None:
-        print('Temp={0:0.1f}*C  Humidity={1:0.1f}%'.format(temperature, humidity))
-    else:
-        print('Failed to get reading. Try again!')
-    return
-'''
+    hcsr501_sensors = list(services.get_sensors(3))
+    duration = dateparse.parse_duration('0:' + str(config.MOVEMENT_SENSOR_DELAY) + ':0')
+    for hcsr501_sensor in hcsr501_sensors:
+        devices = hcsr501_sensor.devices.all()
+        if services.detect_movement(int(hcsr501_sensor.pin.number)):
+            for device in devices:
+                if not device.is_active:
+                    services.switch_device(int(device.id), True)
+        else:
+            if timezone.now() - hcsr501_sensor.last_request_time > duration:
+                services.switch_device(int(device.id), False)
+    return JsonResponse({'Status': True})

@@ -17,29 +17,25 @@ def get_sensors(type=1, limit=None):
     return Sensor.objects.filter(type=type)
 
 
-def turn_device(device_id):
+def switch_device(device_id, state=None):
     device = Device.objects.get(pk=device_id)
     pin = device.relay.pin.number
-    if device.is_active:
-        word = 'Turn on'
-        turn_pin_on_off(int(pin))
-    else:
-        word = 'Turn off'
-        turn_pin_on_off(int(pin), GPIO.LOW)
-
-    device.is_active = not device.is_active
+    if state is None:
+        state = not device.is_active
+    switch_pin(int(pin), state)
+    device.is_active = state
     device.save()
-    return word, True
+    return state
 
 
-def turn_pin_on_off(pin, output=GPIO.HIGH, pin_mode=GPIO.OUT, mode=GPIO.BCM):
+def switch_pin(pin, output=GPIO.HIGH, pin_mode=GPIO.OUT, mode=GPIO.BCM):
     GPIO.setmode(mode)
     GPIO.setup(pin, pin_mode)
     GPIO.output(pin, output)
     return True
 
 
-def get_temp_hum(pin):
+def get_dht22_data(pin):
     sensor = Adafruit_DHT.DHT22
     humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
     if humidity is not None and temperature is not None:
@@ -48,14 +44,18 @@ def get_temp_hum(pin):
         return
 
 
-def save_temperature(temp, hum, sensor_id):
+def register_temperature(temp, hum, sensor_id):
     history = TemperatureHistory(
         requested_date=datetime.now(),
         sensor=sensor_id,
         temperature=temp,
         humidity=hum
     )
-    history.save()
+    try:
+        history.save()
+    except Exception as inst:
+        print(inst.args)
+        print(inst.message)
     return
 
 

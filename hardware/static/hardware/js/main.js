@@ -16,7 +16,7 @@ var AjaxLinks = {
             var self = $(this);
             var url = $(this).attr('href');
             $.getJSON(url, function(result) {
-                if (result.success) {
+                if (result.message) {
                     self.html(result.message);
                     self.toggleClass('active');
                 }
