@@ -52,6 +52,8 @@ def check_motion(request):
     for hcsr501_sensor in hcsr501_sensors:
         devices = hcsr501_sensor.devices.all()
         if services.detect_movement(int(hcsr501_sensor.pin.number)):
+            hcsr501_sensor.last_request_time = timezone.now()
+            hcsr501_sensor.save()
             for device in devices:
                 if not device.is_active:
                     services.switch_device(int(device.id), True)
