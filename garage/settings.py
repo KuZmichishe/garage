@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '(@b&oc$hc%rk6wami+uihcik^##$y61k-rvy*9xkv&*op1zv$+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('GARAGE_DEBUG')
 
 ALLOWED_HOSTS = [
     '192.168.1.198',

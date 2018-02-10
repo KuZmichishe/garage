@@ -5,7 +5,6 @@ import services
 from django.shortcuts import render
 from django.http import JsonResponse
 from constance import config
-import datetime
 from django.utils import timezone, dateparse
 
 

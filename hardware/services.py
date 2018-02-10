@@ -1,8 +1,7 @@
-from .models import Device, Pin, Relay, Sensor, TemperatureHistory
+from .models import Device, Sensor, TemperatureHistory
 import RPi.GPIO as GPIO
 import Adafruit_DHT
 from datetime import datetime
-import time
 
 
 def get_devices(limit=None):
