@@ -147,8 +147,8 @@ THUMBNAIL_PROCESSORS = (
 CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
 
 CONSTANCE_CONFIG = {
-    'MOVEMENT_ACTIVE': (False, 'This option allows you to activate automatic motion detetion and devices control', bool),
-    'MOVEMENT_SENSOR_DELAY': (5, 'Time in mins which device will be turned on until switchd off'),
+    'MOVEMENT_ACTIVE': (False, 'This option allows you to activate automatic motion detection and devices control', bool),
+    'MOVEMENT_SENSOR_DELAY': (5, 'Time in mins which device will be turned on until switched off'),
 }
 
 CONSTANCE_CONFIG_FIELDSETS = {
