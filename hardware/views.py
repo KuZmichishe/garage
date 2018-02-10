@@ -47,7 +47,7 @@ def update_temperature(request):
 
 
 def check_motion(request):
-    status = False
+    state = False
     if config.MOVEMENT_ACTIVE:
         hcsr501_sensors = list(services.get_sensors(3))
         duration = dateparse.parse_duration('0:' + str(config.MOVEMENT_SENSOR_DELAY) + ':0')
@@ -56,15 +56,15 @@ def check_motion(request):
             if services.detect_movement(int(hcsr501_sensor.pin.number)):
                 hcsr501_sensor.last_request_time = timezone.now()
                 hcsr501_sensor.save()
-                status = True
+                state = True
                 for device in devices:
                     if not device.is_active:
-                        services.switch_device(int(device.id), status)
+                        services.switch_device(int(device.id), state)
                         print(1)
             else:
                 if timezone.now() - hcsr501_sensor.last_request_time > duration:
                     for device in devices:
                         if device.is_active:
-                            services.switch_device(int(device.id), status)
+                            services.switch_device(int(device.id), state)
                             print(2)
-    return JsonResponse({'Status': status})
+    return JsonResponse({'Status': state})
