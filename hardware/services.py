@@ -1,4 +1,5 @@
-from .models import Device, Sensor, TemperatureHistory
+from .models import Device
+from sensor.models import Sensor, TemperatureHistory
 import RPi.GPIO as GPIO
 import Adafruit_DHT
 from datetime import datetime

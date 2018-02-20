@@ -16,7 +16,6 @@ from easy_thumbnails.conf import Settings as thumbnail_settings
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
@@ -33,11 +32,10 @@ ALLOWED_HOSTS = [
     'garage.kuzmich.xyz',
 ]
 
-
 # Application definition
 
 INSTALLED_APPS = [
-    'suit',
+    #    'suit',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -45,6 +43,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'hardware.apps.HardwareConfig',
+    'pin.apps.PinConfig',
+    'relay.apps.RelayConfig',
+    'sensor.apps.SensorConfig',
     'easy_thumbnails',
     'image_cropping',
     'constance',
@@ -81,7 +82,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'garage.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
@@ -95,7 +95,6 @@ DATABASES = {
         'PORT': '',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -115,7 +114,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
@@ -129,7 +127,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
@@ -142,13 +139,14 @@ MEDIA_URL = '/media/'
 IMAGE_CROPPING_THUMB_SIZE = (300, 300)
 
 THUMBNAIL_PROCESSORS = (
-    'image_cropping.thumbnail_processors.crop_corners',
-) + thumbnail_settings.THUMBNAIL_PROCESSORS
+                           'image_cropping.thumbnail_processors.crop_corners',
+                       ) + thumbnail_settings.THUMBNAIL_PROCESSORS
 
 CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
 
 CONSTANCE_CONFIG = {
-    'MOVEMENT_ACTIVE': (False, 'This option allows you to activate automatic motion detection and devices control', bool),
+    'MOVEMENT_ACTIVE': (
+    False, 'This option allows you to activate automatic motion detection and devices control', bool),
     'MOVEMENT_SENSOR_DELAY': (5, 'Time in mins which device will be turned on until switched off'),
 }
 

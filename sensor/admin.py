@@ -2,7 +2,6 @@
 from __future__ import unicode_literals
 
 from django.contrib import admin
-from .models import Device, DeviceAdmin
+from .models import Sensor, SensorAdmin
 
-
-admin.site.register(Device, DeviceAdmin)
+admin.site.register(Sensor, SensorAdmin)
