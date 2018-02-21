@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
     url(r'^admin/', admin.site.urls),
     url(r'^', include('hardware.urls')),
+    url(r'^sensors/', include('sensor.urls')),
 ]
 
 if settings.DEBUG:
