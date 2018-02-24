@@ -24,6 +24,12 @@ class Sensor(models.Model):
     def history_items(self):
         return TemperatureHistory.objects.filter(sensor__exact=self.id)
 
+    def history_hourly(self):
+        return TemperatureHistory.objects.filter(
+            sensor__exact=self.id,
+            requested_date__minute=10,
+        )
+
     def __str__(self):
         return self.name
 

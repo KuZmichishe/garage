@@ -8,35 +8,39 @@
     <script type="text/javascript"> </script>
 {% endblock %}
 {% block body %}
-<td class="films-container container-fluid">
-    <td class="row">
+<div class="films-container container-fluid">
+    <div class="row">
         <div class="col-sm-12">
             <h3>Temperature</h3>
         </div>
+    </div>
+    <div class="row">
         {% if sensors %}
             {% for sensor in sensors %}
-                <div class="col-sm-4"><h4>{{ sensor.name }}</h4>{{ sensor.result }}</div>
-                {% if sensor.history_items %}
-                    <table class="table table-striped table-hover">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th scope="col">Date</th>
-                                <th scope="col">Temperature</th>
-                                <th scope="col">Humidity</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for history_item in sensor.history_items %}
+                <div class="col-sm-6">
+                    <h4>{{ sensor.name }}</h4>{{ sensor.result }}
+                    {% if sensor.history_items %}
+                        <table class="table table-striped table-hover">
+                            <thead class="thead-dark">
                                 <tr>
-                                    <td>{{ history_item.requested_date }}</td>
-                                    <td>{{ history_item.humidity }}</td>
-                                    <td>{{ history_item.temperature }}</td>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Temperature</th>
+                                    <th scope="col">Humidity</th>
                                 </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                {% endif %}
-                {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
+                            </thead>
+                            <tbody>
+                                {% for history_item in sensor.temp %}
+                                    <tr>
+                                        <td>{{ history_item.requested_date }}</td>
+                                        <td>{{ history_item.humidity }}</td>
+                                        <td>{{ history_item.temperature }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endif %}
+                    {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
+                </div>
             {% endfor %}
         {% else %}
             <div class="col-sm-12">
@@ -44,6 +48,5 @@
             </div>
         {% endif %}
     </div>
-
 </div>
 {% endblock %}
