@@ -8,13 +8,16 @@
     <script type="text/javascript"> </script>
 {% endblock %}
 {% block body %}
-<div class="films-container container-fluid">
+<div class="container-fluid">
     <div class="row">
         <div class="col-sm-12">
             <h3>Temperature</h3>
         </div>
     </div>
     <div class="row">
+        <fieldset>
+        {% include 'sensor/sensor_filter_form_template.html' %}
+        </fieldset>
         {% if sensors %}
             {% for sensor in sensors %}
                 <div class="col-sm-6">
