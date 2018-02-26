@@ -22,7 +22,7 @@ def index(request):
             requested_date__minute=00,
             sensor_id=sensor.id,
         )
-        if filter:
+        if request.method == 'POST':
             sensors[i].temp = sensors[i].temp.filter(filter)
     return render(
         request,
