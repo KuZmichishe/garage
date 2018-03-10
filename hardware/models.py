@@ -7,6 +7,7 @@ from django.utils.html import format_html
 from image_cropping import ImageRatioField, ImageCroppingMixin
 from pin.models import Pin
 from relay.models import Relay
+from django.conf import settings
 
 
 class Device(models.Model):
@@ -38,3 +39,9 @@ class Device(models.Model):
 
 class DeviceAdmin(ImageCroppingMixin, admin.ModelAdmin):
     list_display = ('name', 'image_object', 'scheme_image_object')
+
+
+class Schedule(models.Model):
+    device = models.ForeignKey(Device)
+    start_time = models.DateTimeField(auto_now=True)
+    type = models.IntegerField(choices=settings.SCHEDULE_TYPE)

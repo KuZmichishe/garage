@@ -5,6 +5,4 @@
 cd /
 cd home/pi/projects/garage/
 sudo python manage.py runserver 0.0.0.0:80
-cd hardware/
-sudo python test.py
 cd /
