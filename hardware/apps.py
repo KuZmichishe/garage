@@ -6,6 +6,3 @@ import subprocess
 
 class HardwareConfig(AppConfig):
     name = 'hardware'
-
-    def ready(self):
-        subprocess.Popen(['python', '/home/pi/projects/garage/hardware/test.py'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
