@@ -17,6 +17,10 @@ def get_sensors(type=1, limit=None):
     return Sensor.objects.filter(type=type)
 
 
+def check_humidity_difference():
+    return
+
+
 def switch_device(device_id, state=None):
     device = Device.objects.get(pk=device_id)
     pin = device.relay.pin.number
