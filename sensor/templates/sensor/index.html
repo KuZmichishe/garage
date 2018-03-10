@@ -2,9 +2,10 @@
 {% load staticfiles %}
 {% block sensors_active %}active{% endblock %}
 {% block title %}Sensors list{% endblock %}
-{% block javascript %}
-    <script src="{% static 'sensor/js/d3.min.js' %}?h=1"></script>
-    <script src="{% static 'sensor/js/sensor.js' %}?h=1"></script>
+{% block scripts %}
+    <script src="{% static 'sensor/js/datepicker.min.js' %}?h=3"></script>
+    <script src="{% static 'sensor/js/sensor.js' %}?h=3"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'sensor/css/datepicker.min.css' %}?e=2"/>
     <script type="text/javascript"> </script>
 {% endblock %}
 {% block body %}
