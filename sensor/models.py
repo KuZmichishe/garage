@@ -32,7 +32,7 @@ class Sensor(models.Model):
 class Sensor_Devices(models.Model):
     sensor = models.ForeignKey(Sensor)
     device = models.ForeignKey(Device)
-    # type = models.IntegerField(choices=settings.SENSOR_TYPE, default=1)
+    type = models.IntegerField(choices=settings.SENSOR_TYPE, default=1)
 
 
 class SensorAdmin(admin.ModelAdmin):
