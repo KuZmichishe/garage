@@ -3,6 +3,7 @@ from sensor.models import Sensor, TemperatureHistory
 import RPi.GPIO as GPIO
 import Adafruit_DHT
 from datetime import datetime
+from constance import config
 
 
 def get_devices(limit=None):
@@ -18,7 +19,17 @@ def get_sensors(type=1, limit=None):
 
 
 def check_humidity_difference():
-    return
+    out_sensor_data = get_temperature_humidity(config.OUTSIDE_TEMPERATURE_SENSOR_ID)
+    for in_sensor in get_sensors(2).exclude(id=config.OUTSIDE_TEMPERATURE_SENSOR_ID):
+        in_sensor_data = get_temperature_humidity(in_sensor.id)
+        if out_sensor_data[1] - in_sensor_data[1] >= config.DIFFERENCE_IN_HUMIDITY:
+            for device in in_sensor.devices.all():
+                switch_device(device.id, True)
+        else:
+            if out_sensor_data[1] - in_sensor_data[1] <= 0:
+                for device in in_sensor.devices.all():
+                    switch_device(device.id, False)
+    return True
 
 
 def switch_device(device_id, state=None):
@@ -37,6 +48,12 @@ def switch_pin(pin, output=GPIO.HIGH, pin_mode=GPIO.OUT, mode=GPIO.BCM):
     GPIO.setup(pin, pin_mode)
     GPIO.output(pin, output)
     return True
+
+
+def get_temperature_humidity(sensor_id):
+    sensor = Sensor.objects.get(pk=sensor_id)
+    data = get_dht22_data(sensor.pin.id)
+    return data
 
 
 def get_dht22_data(pin):

@@ -67,3 +67,8 @@ def check_motion(request):
                             services.switch_device(int(device.id), state)
                             print(2)
     return JsonResponse({'Status': state})
+
+
+def test(request):
+    services.check_humidity_difference()
+    return

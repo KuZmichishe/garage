@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^device_on/(?P<device_id>[0-9]+)/$', views.device_on, name='device_on'),
     url(r'^update/temperature/$', views.update_temperature, name='update_temperature'),
     url(r'^check/motion/$', views.check_motion, name='check_motion'),
+    url(r'^test/$', views.test, name='test'),
 ]
