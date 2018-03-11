@@ -6,10 +6,10 @@ from django.contrib import admin
 
 
 class Pin(models.Model):
-    number = models.IntegerField(null=False)
+    number = models.IntegerField(unique=True, null=False)
     name = models.CharField(null=False, max_length=100)
     is_in = models.BooleanField(default=True)
-    position = models.IntegerField(null=False)
+    position = models.IntegerField(unique=True, null=False)
 
     def __str__(self):
         return self.name + '-' + str(self.position)

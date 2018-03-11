@@ -11,7 +11,7 @@ from hardware.models import Device
 
 class Sensor(models.Model):
     name = models.CharField(null=False, max_length=100)
-    pin = models.ForeignKey(Pin)
+    pin = models.OneToOneField(Pin)
     devices = models.ManyToManyField(Device, blank=True)
     type = models.IntegerField(choices=settings.SENSOR_TYPE, default=3)
     image = models.FileField(default='')

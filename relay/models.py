@@ -7,7 +7,7 @@ from django.conf import settings
 
 
 class Relay(models.Model):
-    number = models.IntegerField(choices=settings.RELAY_CHOICES)
+    number = models.IntegerField(unique=True, choices=settings.RELAY_CHOICES)
     pin = models.ForeignKey(Pin)
 
     def __str__(self):
