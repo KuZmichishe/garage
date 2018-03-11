@@ -19,11 +19,9 @@ class Sensor(models.Model):
     code = models.CharField(null=False, max_length=100, default='')
     last_request_time = models.DateTimeField(blank=True, auto_now=True)
     result = models.CharField(blank=True, max_length=200)
+    fake = models.BooleanField(default=False)
 
     @property
-    def __str__(self):
-        return self.name
-
     def image_object(self):
         return format_html(
             '<img width=30 height=30 src="{}" />',
