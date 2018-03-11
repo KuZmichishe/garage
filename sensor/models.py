@@ -12,7 +12,7 @@ from hardware.models import Device
 class Sensor(models.Model):
     name = models.CharField(null=False, max_length=100)
     pin = models.OneToOneField(Pin)
-    devices = models.ManyToManyField(Device, blank=True)
+    devices = models.ManyToManyField(Device, blank=True, through='Sensor_Devices', verbose_name=u'Devices')
     type = models.IntegerField(choices=settings.SENSOR_TYPE, default=3)
     image = models.FileField(default='')
     scheme_image = models.FileField(default='')
@@ -29,6 +29,12 @@ class Sensor(models.Model):
         )
 
 
+class Sensor_Devices(models.Model):
+    sensor = models.ForeignKey(Sensor)
+    device = models.ForeignKey(Device)
+    # type = models.IntegerField(choices=settings.SENSOR_TYPE, default=1)
+
+
 class SensorAdmin(admin.ModelAdmin):
     list_display = ('name', 'image_object', 'pin')
 
@@ -38,4 +44,3 @@ class TemperatureHistory(models.Model):
     sensor = models.ForeignKey(Sensor, null=True)
     temperature = models.DecimalField(null=True, max_digits=3, decimal_places=1)
     humidity = models.DecimalField(null=True, max_digits=3, decimal_places=1)
-
