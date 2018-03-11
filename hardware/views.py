@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-import services
+import services, sensor.services
 from django.shortcuts import render
 from django.http import JsonResponse
 
 
 def index(request):
     devices = services.get_devices()
-    dht22_sensors = services.get_sensors(2)
+    dht22_sensors = sensor.services.get_sensors(2)
 
     return render(
         request,
