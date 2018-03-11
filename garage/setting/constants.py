@@ -4,6 +4,12 @@ SENSOR_TYPE = (
     (3, 'Movement')
 )
 
+SENSOR_DEVICE_TYPE = (
+    (1, 'Heater'),
+    (2, 'Cooling'),
+    (3, 'Light')
+)
+
 SCHEDULE_TYPE = (
     (1, 'Start'),
     (2, 'Stop'),

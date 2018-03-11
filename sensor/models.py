@@ -28,15 +28,14 @@ class Sensor(models.Model):
             self.image.url,
         )
 
+    def __str__(self):
+        return self.name
+
 
 class Sensor_Devices(models.Model):
     sensor = models.ForeignKey(Sensor)
     device = models.ForeignKey(Device)
-    type = models.IntegerField(choices=settings.SENSOR_TYPE, default=1)
-
-
-class SensorAdmin(admin.ModelAdmin):
-    list_display = ('name', 'image_object', 'pin')
+    type = models.IntegerField(choices=settings.SENSOR_DEVICE_TYPE, default=1)
 
 
 class TemperatureHistory(models.Model):
