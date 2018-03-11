@@ -12,18 +12,38 @@ def get_sensors(type=1, limit=None):
     return Sensor.objects.filter(type=type)
 
 
-def check_humidity_difference():
+def do_climate_actions():
     out_sensor_data = get_temperature_humidity(config.OUTSIDE_TEMPERATURE_SENSOR_ID)
+    results = {}
     for in_sensor in get_sensors(2).exclude(id=config.OUTSIDE_TEMPERATURE_SENSOR_ID):
         in_sensor_data = get_temperature_humidity(in_sensor.id)
-        if out_sensor_data[1] - in_sensor_data[1] >= config.DIFFERENCE_IN_HUMIDITY:
-            for device in in_sensor.devices.all():
-                switch_device(device.id, True)
-        else:
-            if out_sensor_data[1] - in_sensor_data[1] <= 0:
-                for device in in_sensor.devices.all():
-                    switch_device(device.id, False)
-    return out_sensor_data[1] - in_sensor_data[1]
+        results['humidity'] = check_humidity_difference(out_sensor_data[1], in_sensor_data[1], in_sensor)
+        results['temperature'] = check_inside_temperature(out_sensor_data[0], in_sensor_data[0], in_sensor)
+    return results
+
+
+def check_humidity_difference(out_sensor_hum, in_sensor_hum, in_sensor):
+    results = {}
+    for device in in_sensor.devices.all():
+        if out_sensor_hum - in_sensor_hum >= config.DIFFERENCE_IN_HUMIDITY:
+            action = True
+        elif out_sensor_hum - in_sensor_hum <= 0:
+            action = False
+        results[str(device.name)] = {
+            'device_name': device.name,
+            'action': action,
+            'difference': out_sensor_hum - in_sensor_hum
+        }
+        switch_device(device.id, action)
+    return results
+
+
+def check_inside_temperature(out_sensor_temp, in_sensor_temp, in_sensor):
+    results = {
+        'out_sensor_temp': out_sensor_temp,
+        'in_sensor_temp': in_sensor_temp,
+    }
+    return results
 
 
 def get_temperature_humidity(sensor_id):

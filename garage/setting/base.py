@@ -1,4 +1,3 @@
-from garage.setting.static import *
 from garage.setting.constanse import *
 from garage.setting.constants import *
 

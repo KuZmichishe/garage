@@ -8,5 +8,5 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^update/temperature/$', views.update_temperature, name='update_temperature'),
     url(r'^check/motion/$', views.check_motion, name='check_motion'),
-    url(r'^check/humidity/$', views.check_humidity, name='check_humidity'),
+    url(r'^check/climate/$', views.check_climate, name='check_climate'),
 ]

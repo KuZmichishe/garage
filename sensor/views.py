@@ -80,8 +80,8 @@ def check_motion(request):
     return JsonResponse({'Status': state})
 
 
-def check_humidity(request):
-    difference = services.check_humidity_difference()
+def check_climate(request):
+    status = services.do_climate_actions()
     return JsonResponse({
-        'success': difference,
+        'results': status,
     })
