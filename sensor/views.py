@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-import services, pin.services, hardware.services
+import services
+import pin.services
+import hardware.services
 
 from django.shortcuts import render
 from .models import Sensor, TemperatureHistory
@@ -42,7 +44,9 @@ def index(request):
 def update_temperature(request):
     dht22_sensors = services.get_sensors(2).all()
     for dht22_sensor in dht22_sensors:
-        temp, hum = services.get_dht22_data(int(dht22_sensor.pin.number))
+        temp, hum = services.get_dht22_data(
+            int(dht22_sensor.pin.number)
+        )
         dht22_sensor.result = 'Temp = {0:0.1f} °C,  Humidity = {1:0.1f} %'.format(temp, hum)
         dht22_sensor.save()
         services.register_temperature(temp, hum, dht22_sensor)
