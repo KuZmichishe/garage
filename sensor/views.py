@@ -42,11 +42,12 @@ def index(request):
 
 
 def update_temperature(request):
-    dht22_sensors = services.get_sensors(2).all()
+    dht22_sensors = services.get_sensors(2)
     for dht22_sensor in dht22_sensors:
-        temp, hum = services.get_dht22_data(
-            int(dht22_sensor.pin.number)
-        )
+        if dht22_sensor.fake:
+            temp, hum = services.get_dht22_data_fake()
+        else:
+            temp, hum = services.get_dht22_data(int(dht22_sensor.pin.number))
         dht22_sensor.result = 'Temp = {0:0.1f} °C,  Humidity = {1:0.1f} %'.format(temp, hum)
         dht22_sensor.save()
         services.register_temperature(temp, hum, dht22_sensor)
