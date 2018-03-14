@@ -62,7 +62,7 @@ def check_motion(request):
         hcsr501_sensors = list(services.get_sensors(3))
         duration = dateparse.parse_duration('0:' + str(config.MOVEMENT_SENSOR_DELAY) + ':0')
         for hcsr501_sensor in hcsr501_sensors:
-            devices = hcsr501_sensor.devices.all()
+            devices = hcsr501_sensor.devices.all().filter(sensor_devices__type=3)
             if pin.services.detect_movement(int(hcsr501_sensor.pin.number)):
                 hcsr501_sensor.last_request_time = timezone.now()
                 hcsr501_sensor.save()
@@ -70,13 +70,10 @@ def check_motion(request):
                 for device in devices:
                     if not device.is_active:
                         hardware.services.switch_device(int(device.id), state)
-                        print(1)
-            else:
-                if timezone.now() - hcsr501_sensor.last_request_time > duration:
-                    for device in devices:
-                        if device.is_active:
-                            hardware.services.switch_device(int(device.id), state)
-                            print(2)
+            elif timezone.now() - hcsr501_sensor.last_request_time > duration:
+                for device in devices:
+                    if device.is_active:
+                        hardware.services.switch_device(int(device.id), state)
     return JsonResponse({'Status': state})
 
 
