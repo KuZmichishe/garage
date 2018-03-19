@@ -24,9 +24,9 @@ def do_climate_actions():
 
 def check_humidity_difference(out_sensor_hum, in_sensor_hum, in_sensor):
     results = {}
-    if out_sensor_hum - in_sensor_hum >= config.DIFFERENCE_IN_HUMIDITY:
+    if in_sensor_hum - out_sensor_hum > config.DIFFERENCE_IN_HUMIDITY:
         action = True
-    elif out_sensor_hum - in_sensor_hum <= 0:
+    elif in_sensor_hum - out_sensor_hum <= config.DIFFERENCE_IN_HUMIDITY:
         action = False
     for device in in_sensor.devices.all().filter(sensor_devices__type=2):
         switch_device(device.id, action)
