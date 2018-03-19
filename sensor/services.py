@@ -41,10 +41,7 @@ def check_humidity_difference(out_sensor_hum, in_sensor_hum, in_sensor):
 
 
 def check_inside_temperature(out_sensor_temp, in_sensor_temp, in_sensor):
-    results = {
-        'out_sensor_temp': out_sensor_temp,
-        'in_sensor_temp': in_sensor_temp,
-    }
+    results = {}
     if in_sensor_temp <= config.MIN_TEMP_INSIDE:
         action = True
     elif (in_sensor >= config.MAX_TEMP_INSIDE) or (out_sensor_temp >= config.MIN_TEMP_INSIDE):
@@ -65,7 +62,7 @@ def get_temperature_humidity(sensor_id):
     if sensor.fake:
         data = get_dht22_data_fake()
     else:
-        data = get_dht22_data(sensor.pin.id)
+        data = get_dht22_data(int(sensor.pin.id))
     return data
 
 
