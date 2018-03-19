@@ -62,7 +62,7 @@ def get_temperature_humidity(sensor_id):
     if sensor.fake:
         data = get_dht22_data_fake()
     else:
-        data = get_dht22_data(int(sensor.pin.id))
+        data = get_dht22_data(int(sensor.pin.number))
     return data
 
 
