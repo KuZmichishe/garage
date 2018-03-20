@@ -34,8 +34,8 @@ def check_humidity_difference(out_sensor_hum, in_sensor_hum, in_sensor):
             'device_name': device.name,
             'action': action,
             'out_sensor_hum': out_sensor_hum,
-            'in_sensor_thum': in_sensor_hum,
-            'difference': out_sensor_hum - in_sensor_hum
+            'in_sensor_hum': in_sensor_hum,
+            'difference': in_sensor_hum - out_sensor_hum
         }
     return results
 
