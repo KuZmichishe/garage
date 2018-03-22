@@ -2,7 +2,7 @@ CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
 
 CONSTANCE_CONFIG = {
     'MOVEMENT_ACTIVE': (
-        False,
+        True,
         'This option allows you to activate automatic motion detection and devices control',
         bool
     ),
@@ -45,15 +45,17 @@ CONSTANCE_CONFIG = {
 
 CONSTANCE_CONFIG_FIELDSETS = {
     'Movement sensors': (
-        'MOVEMENT_ACTIVE',
-        'MOVEMENT_SENSOR_DELAY'
+        'MOVEMENT_SENSOR_DELAY',
     ),
     'Climate sensors': (
-        'AUTOMATIC_VENTILATE',
-        'AUTOMATIC_HEAT',
         'OUTSIDE_TEMPERATURE_SENSOR_ID',
         'DIFFERENCE_IN_HUMIDITY',
         'MIN_TEMP_INSIDE',
         'MAX_TEMP_INSIDE',
+    ),
+    'Systems': (
+        'MOVEMENT_ACTIVE',
+        'AUTOMATIC_VENTILATE',
+        'AUTOMATIC_HEAT',
     ),
 }

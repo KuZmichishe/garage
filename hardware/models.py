@@ -2,9 +2,8 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from django.contrib import admin
 from django.utils.html import format_html
-from image_cropping import ImageRatioField, ImageCroppingMixin
+from image_cropping import ImageRatioField
 from pin.models import Pin
 from relay.models import Relay
 from django.conf import settings
@@ -37,8 +36,9 @@ class Device(models.Model):
         return self.name
 
 
-class DeviceAdmin(ImageCroppingMixin, admin.ModelAdmin):
-    list_display = ('name', 'image_object', 'scheme_image_object')
+class Group(models.Model):
+    name = models.CharField(null=False, max_length=100)
+    device = models.ManyToManyField(Device)
 
 
 class Schedule(models.Model):
