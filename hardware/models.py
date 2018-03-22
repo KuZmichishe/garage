@@ -40,6 +40,9 @@ class Group(models.Model):
     name = models.CharField(null=False, max_length=100)
     device = models.ManyToManyField(Device)
 
+    def __str__(self):
+        return self.name
+
 
 class Schedule(models.Model):
     device = models.ForeignKey(Device)

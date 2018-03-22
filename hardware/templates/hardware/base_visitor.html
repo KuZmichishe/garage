@@ -32,21 +32,8 @@
         <!-- Items -->
         <div class="collapse navbar-collapse" id="topNavBar">
             <ul class="nav navbar-nav">
-                <li class="{% block devices_active %}{% endblock %}"><a href="{% url 'hardware:index' %}"><span class="glyphicon glyphicon-lamp" aria-hidden="true"></span>&nbsp; Devices</a></li>
-                <li class="{% block sensors_active %}{% endblock %}"><a href="{% url 'sensor:index' %}"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span>&nbsp; Sensors</a></li>
-            </ul>
-            <form class="navbar-form navbar-left" role="search" method="get" action="{% url 'hardware:index' %}">
-                <div class="form-group">
-                    <input type="text" class="form-control" name="q" value="{{ request.GET.q }}">
-                </div>
-                <button type="submit" class="btn btn-default">Search</button>
-            </form>
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a href="{% url 'hardware:logout_user' %}">
-                        <span class="glyphicon glyphicon-off" aria-hidden="true"></span>&nbsp; Logout
-                    </a>
-                </li>
+
+                <li class="{% block login_active %}{% endblock %}"><a href="{% url 'hardware:login_user' %}">Log In</a></li>
             </ul>
         </div>
     </div>
