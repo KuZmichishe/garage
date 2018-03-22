@@ -17,8 +17,10 @@ def do_climate_actions():
     results = {}
     for in_sensor in get_sensors(2).exclude(id=config.OUTSIDE_TEMPERATURE_SENSOR_ID):
         in_sensor_data = get_temperature_humidity(in_sensor.id)
-        results['humidity'] = check_humidity_difference(out_sensor_data[1], in_sensor_data[1], in_sensor)
-        results['temperature'] = check_inside_temperature(out_sensor_data[0], in_sensor_data[0], in_sensor)
+        if config.AUTOMATIC_VENTILATE:
+            results['humidity'] = check_humidity_difference(out_sensor_data[1], in_sensor_data[1], in_sensor)
+        if config.AUTOMATIC_HEAT:
+            results['temperature'] = check_inside_temperature(out_sensor_data[0], in_sensor_data[0], in_sensor)
     return results
 
 

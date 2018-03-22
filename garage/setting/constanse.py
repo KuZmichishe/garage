@@ -31,6 +31,16 @@ CONSTANCE_CONFIG = {
         'Max temperature which will trigger heater off',
         int
     ),
+    'AUTOMATIC_VENTILATE': (
+        True,
+        'Automatically switch coolers depend on humidity difference',
+        bool
+    ),
+    'AUTOMATIC_HEAT': (
+        True,
+        'Automatically switch heater depend on min/max inside temperature',
+        bool
+    ),
 }
 
 CONSTANCE_CONFIG_FIELDSETS = {
@@ -39,6 +49,8 @@ CONSTANCE_CONFIG_FIELDSETS = {
         'MOVEMENT_SENSOR_DELAY'
     ),
     'Climate sensors': (
+        'AUTOMATIC_VENTILATE',
+        'AUTOMATIC_HEAT',
         'OUTSIDE_TEMPERATURE_SENSOR_ID',
         'DIFFERENCE_IN_HUMIDITY',
         'MIN_TEMP_INSIDE',
