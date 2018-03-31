@@ -9,7 +9,7 @@ from django.shortcuts import render
 from .models import Sensor, TemperatureHistory
 from .forms import FiltersForm
 from django.db.models import Q
-# from django.db.models.functions import (TruncDay)
+from django.db.models.functions import (TruncDay)
 from django.http import JsonResponse
 from constance import config
 from django.utils import timezone, dateparse
@@ -31,7 +31,7 @@ def index(request):
             sensors[i].temp = TemperatureHistory.objects.filter(
                 sensor_id=sensor.id,
             ).annotate(
-                # date=TruncDay('requested_date'),
+                date=TruncDay('requested_date'),
             )
             if request.method == 'POST':
                 sensors[i].temp = sensors[i].temp.filter(filter)
