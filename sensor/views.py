@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 import services
 import pin.services
 import hardware.services
+import datetime
 
 from django.shortcuts import render
 from .models import Sensor, TemperatureHistory
@@ -19,10 +20,11 @@ def index(request):
     if not request.user.is_authenticated():
         return render(request, 'hardware/login.html')
     else:
+        filter = Q(requested_date__gte=datetime.date.today())
         if request.method == 'POST':
             form = FiltersForm(request.POST)
             if form.is_valid():
-                filter = Q(requested_date__gt=form.cleaned_data['date_from']) & Q(requested_date__lt=form.cleaned_data['date_to'])
+                filter = Q(requested_date__gte=form.cleaned_data['date_from']) & Q(requested_date__lte=form.cleaned_data['date_to'])
         else:
             form = FiltersForm()
             # now = timezone.now()
@@ -33,8 +35,7 @@ def index(request):
             ).annotate(
                 date=TruncDay('requested_date'),
             )
-            if request.method == 'POST':
-                sensors[i].temp = sensors[i].temp.filter(filter)
+            sensors[i].temp = sensors[i].temp.filter(filter)
         return render(
             request,
             'sensor/index.html', {
