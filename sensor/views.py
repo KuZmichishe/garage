@@ -20,13 +20,20 @@ def index(request):
     if not request.user.is_authenticated():
         return render(request, 'hardware/login.html')
     else:
-        filter = Q(requested_date__gte=datetime.date.today())
+        form = FiltersForm({
+            'date_from': datetime.date.today(),
+            'date_to': datetime.date.today(),
+        })
         if request.method == 'POST':
             form = FiltersForm(request.POST)
-            if form.is_valid():
-                filter = Q(requested_date__gte=form.cleaned_data['date_from']) & Q(requested_date__lte=form.cleaned_data['date_to'])
-        else:
-            form = FiltersForm()
+        if form.is_valid():
+            filter = Q(
+                requested_date__range=[
+                    form.cleaned_data['date_from'],
+                    form.cleaned_data['date_to']
+                ]
+            )
+
             # now = timezone.now()
         sensors = Sensor.objects.filter(type=2)
         for i, sensor in enumerate(sensors):
