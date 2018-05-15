@@ -3,7 +3,7 @@
 import subprocess
 from subprocess import Popen, PIPE
 
-gpio_pin=18
+gpio_pin=27
 proc = Popen(
         "echo %s > /sys/class/gpio/export" % gpio_pin,
         shell=True,
