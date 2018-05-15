@@ -99,5 +99,5 @@ def get_temp_inside_json(request):
     temp, hum = services.get_dht22_data(23)
     return JsonResponse({
         'temperature': temp,
-        "humidity": hum
+        'humidity': hum
     })
