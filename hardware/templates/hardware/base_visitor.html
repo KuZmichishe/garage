@@ -7,12 +7,12 @@
     <title>{% block title %}Garage{% endblock %}</title>
     {% load staticfiles %}
     <link rel="shortcut icon" type="image/png" href="{%  static 'favicon.ico' %}"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Special+Elite" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'hardware/bootstrap.min.css' %}">
+    <!--<link href="https://fonts.googleapis.com/css?family=Special+Elite" rel="stylesheet"> -->
     <!--<link href="https://fonts.googleapis.com/css?family=Luckiest+Guy" rel="stylesheet">-->
     <link rel="stylesheet" type="text/css" href="{% static 'hardware/style.css' %}?e=2"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="{% static 'hardware/js/jquery.min.js' %}"></script>
+    <script src="{% static 'hardware/js/bootstrap.min.js' %}"></script>
 
     <script src="{% static 'hardware/js/main.js' %}?h=8"></script>
     {% block scripts %}{% endblock %}
