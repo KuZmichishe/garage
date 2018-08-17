@@ -30,6 +30,8 @@ MEDIA_URL = '/media/'
 
 IMAGE_CROPPING_THUMB_SIZE = (300, 300)
 
+JQUERY_URL = STATIC_URL + 'jquery.min.js'
+
 THUMBNAIL_PROCESSORS = (
                            'image_cropping.thumbnail_processors.crop_corners',
                        ) + thumbnail_settings.THUMBNAIL_PROCESSORS
